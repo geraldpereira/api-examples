@@ -92,22 +92,6 @@ Instructions to set up for Windows/.Net can be found on
 
 [http://sprightlysoft.com/blog/?p=94](http://sprightlysoft.com/blog/?p=94)
 
-
-#Raspberry Pi device
-
-For accessing the local Raspberry Pi device with SSH it can be done with:
-
-	ssh -p 10000 pi@i-46-149-21-114.compute.is-1.greenqloud.com
-	
-SSH Password is on the blackboard
-	
-For accessing through VNC it can be done with:
-
-	i-46-149-21-114.compute.is-1.greenqloud.com on port 10001
-
-VNC Password is on the blackboard
-	
-
 ###Other Tools
 
 There are other tools that may be used to call GreenQlouds APIs. 
