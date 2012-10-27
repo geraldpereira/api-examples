@@ -116,7 +116,7 @@ Here's how to get started on OSX with Awssum, Node.js, Meteor and Meteorite.
 
 Now install the frameworks (from your home directory):
 
-    # install node, npm, meteor & meteorite
+    # install node, npm, meteor & meteorite & awssum
     brew install node
     curl https://npmjs.org/install.sh | sh
     curl https://install.meteor.com | sh
