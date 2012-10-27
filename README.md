@@ -92,10 +92,35 @@ Instructions to set up for Windows/.Net can be found on
 
 [http://sprightlysoft.com/blog/?p=94](http://sprightlysoft.com/blog/?p=94)
 
-###Other Tools
+###Other Great Tools
 
 There are other tools that may be used to call GreenQlouds APIs. 
 
+**Awssum** is a Node.js module that specifically supports GreenQloud's Compute and Storage services. GreenQloud's own management console, http://my.greenqloud.com, is built on Awssum and the revolutionary Meteor framework. Using the two together with a Meteorite smart package is a very fast way to build a web application:
+
+	Awssum - examples: http://awssum.io
+	Meteor: http://meteor.com
+	Smart package: https://github.com/possibilities/meteor-awssum
+
+Here's how to get started on OSX with Awssum, Node.js, Meteor and Meteorite. 
+
+*Prerequisite*: If you don't have command line build tools like gcc installed you need to start with installing XCode and the command line tools:
+	
+	1. Install XCode from the OSX App Store
+	2. Open Xcode and go to Preferences -> downloads and install command line tools (cli)
+	3. In the Terminal.app do : sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+	4. To install Node.js you will Homebrew. (http://mxcl.github.com/homebrew/)
+	In the Terminal.app : ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+
+Then:
+
+    # install node, npm, meteor & meteorite
+    brew install node
+    curl https://npmjs.org/install.sh | sh
+    curl https://install.meteor.com | sh
+    sudo npm install -g meteorite
+
+  
 **Boto** is a popular Python library for calling EC2/S3 services:
 
 	https://github.com/boto/boto
@@ -104,10 +129,7 @@ There are other tools that may be used to call GreenQlouds APIs.
 
 	greenqloud-boto-sample
 	python greenqloud_simple_test.py
-	
-**Awssum** is a Node.js module that has been used to consume GQ SQ and CQ APIs:
-
-	http://awssum.io
+		
 
 Within this github repository
 
