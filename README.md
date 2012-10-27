@@ -105,6 +105,10 @@ There are other tools that may be used to call GreenQlouds APIs.
 	greenqloud-boto-sample
 	python greenqloud_simple_test.py
 	
+**Awssum** is a Node.js module that has been used to consume GQ SQ and CQ APIs:
+
+	http://awssum.io
+
 Within this github repository
 
 **AWS Java SDK** is Amazons library for calling EC2/S3 that works with Greenqloud:
