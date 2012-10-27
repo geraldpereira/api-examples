@@ -107,19 +107,95 @@ Here's how to get started on OSX with Awssum, Node.js, Meteor and Meteorite.
 *Prerequisite*: If you don't have command line build tools like gcc installed you need to start with installing XCode and the command line tools:
 	
 	1. Install XCode from the OSX App Store
-	2. Open Xcode and go to Preferences -> downloads and install command line tools (cli)
-	3. In the Terminal.app do : sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
-	4. To install Node.js you will Homebrew. (http://mxcl.github.com/homebrew/)
-	In the Terminal.app : ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
+	2. Open Xcode and go to the Preferences and the Downloads tab
+	Install the Command Line Tools (cli)
+	3. Tell OSX to use the latest XCode
+	sudo xcode-select -switch /Applications/Xcode.app/Contents/Developer
+	4. To install Node.js it is easiest to do with Homebrew, http://mxcl.github.com/homebrew/.
+	ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
 
-Then:
+Now install the frameworks (from your home directory):
 
     # install node, npm, meteor & meteorite
     brew install node
     curl https://npmjs.org/install.sh | sh
     curl https://install.meteor.com | sh
     sudo npm install -g meteorite
+	npm install awssum
+	
+Finally create your app and add the awssum smart package:
 
+	mrt create myGQApp
+	cd myGQApp
+	mrt update
+	mrt add awssum
+	mrt (runs the app on http://localhost:3000)
+	
+To use the Compute Qloud and Storage Qloud APIs you have to initialize them on the server side e.g. in the default server side code block of myGQApp.js :
+	
+	if (Meteor.isServer) {...
+	
+	var greenqloud = AWSSum.load('greenqloud/greenqloud');
+	var SQ = AWSSum.load('greenqloud/s3','S3');
+	var CQ = AWSSum.load('greenqloud/ec2', 'Ec2');
+
+	function getSQ(apiKey, secretKey, region) {
+		if (!region) {
+			region = greenqloud.IS_1;
+		}
+
+		return new SQ({
+			accessKeyId     : apiKey,
+			secretAccessKey : secretKey,
+			region			: region
+		});
+	}
+	
+	function getCQ(apiKey, secretKey, region) {
+		if (!region) {
+			region = greenqloud.IS_1;
+		}
+	
+		return new CQ({
+			accessKeyId     : apiKey,
+			secretAccessKey : secretKey,
+			region			: region
+		});
+	}
+	
+	function encodeUTF8( s ){
+		return unescape( encodeURIComponent( s ) );
+	}
+	function decodeUTF8( s ){
+		return decodeURIComponent( escape( s ) );
+	}
+
+	...
+	
+There are many examples on http://awssum.io just remember Compute Qloud is EC2 compatible and Storage Qloud is S3 compatible! Now you can do stuff like:
+
+	function getBucketObjects(apiKey, secretKey, bucketName, prefix){
+		this.unblock(); //so we can do parallel stuff, meteor is serial by default
+		console.log("[StorageQloud] Listing objects in this bucket");
+
+
+		var bucketOptions = {
+			BucketName : bucketName,
+			Delimiter : '/',
+			Prefix : encodeUTF8(prefix)
+		};
+	
+		var result = getSQ(apiKey, secretKey).ListObjects(bucketOptions);
+		if(result.error){
+			return new Meteor.Error(500, result.error);
+		}
+		else{
+			console.log(result.Body.ListBucketResult, 'Result');
+			return result.Body.ListBucketResult;
+		}
+	}
+	
+	
   
 **Boto** is a popular Python library for calling EC2/S3 services:
 
